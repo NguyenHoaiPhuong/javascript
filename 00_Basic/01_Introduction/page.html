@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+    </head>
+
+    <body>
+        <h1>What can Javascript do?</h1>
+        <h2 id="demo">Javascript can change html content</h2>
+        <button type="button" onclick="document.getElementById('demo').innerHTML='Hello Javascript!'">Click Me</button>
+
+        <h2>Javascript can change attribute values</h2>
+        <button type="button" onclick="document.getElementById('srcImage').src='pic_bulbon.gif'">Turn on the light</button>
+        <img id="srcImage" src="pic_bulboff.gif" style="width: 100px">
+        <button type="button" onclick="document.getElementById('srcImage').src='pic_bulboff.gif'">Turn off the light</button>
+
+        <h2 id="styleH2">Javascript can change html styles</h2>
+        <button type="button" onclick="document.getElementById('styleH2').style.color='red'">Click Me</button>
+
+        <br>
+
+        <h2 id="hideShowElem">Javascript can hide / show html elements</h2>
+        <button type="button" onclick="document.getElementById('hideShowElem').style.display='none'">Hide Me</button>
+        <button type="button" onclick="document.getElementById('hideShowElem').style.display='block'">Show Me</button>
+    </body>
+</html>
