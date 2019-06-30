@@ -27,8 +27,7 @@ const food = {
 
     init: function() {
         this.img.src = "img/food.png";
-        this.x = Math.floor(Math.random()*17 + 1) * box;
-        this.y = Math.floor(Math.random()*15 + 3) * box;
+        this.setPosition();
     },
 
     setPosition: function() {
@@ -80,60 +79,145 @@ const score = {
     }
 }
 
-const direction = {
-    d: "",
-    sound: new Audio(),
+const sound = {
+    audio: new Audio(),
 
-    setSound: function() {
-        if (this.d == "LEFT") {
-            this.sound.src = "/audio/left.mp3"
-        } else if (this.d == "RIGHT") {
-            this.sound.src = "/audio/right.mp3"
-        } else if (this.d == "UP") {
-            this.sound.src = "/audio/up.mp3"
-        } else if (this.d == "DOWN") {
-            this.sound.src = "/audio/down.mp3"
+    setSource: function(status) {
+        switch (status) {
+            case "LEFT":
+                this.audio.src = "audio/left.mp3";
+                break;
+            case "RIGHT":
+                this.audio.src = "audio/right.mp3";
+                break;
+            case "DOWN":
+                this.audio.src = "audio/down.mp3";
+                break;
+            case "UP":
+                this.audio.src = "audio/up.mp3";
+                break;
+            case "DEAD":
+                this.audio.src = "audio/dead.mp3";
+                break;
+            case "EAT":
+                this.audio.src = "audio/eat.mp3";
+                break;
+            default:
+                this.audio.src = "";
+                break;
         }
-        this.sound.play()
     },
 
-    set: function(event) {
-        let key = event.keyCode;
-        if (key == 37 && this.d != "RIGHT") {
-            this.d = "LEFT";
-            this.setSound();
-        } else if (key == 38 && this.d != "DOWN") {
-            this.d = "UP";
-            this.setSound();
-        } else if (key == 39 && this.d != "LEFT") {
-            this.d = "RIGHT";
-            this.setSound();
-        } else if (key == 40 && this.d != "UP") {
-            this.d = "DOWN";
-            this.setSound();
-        }
+    play: function() {
+        this.audio.play()
     }
 }
 
+let state = ""
+let dir = ""
 
-function draw() {
-    ground.draw()
-    score.draw()
-    food.draw()
-    snake.draw()
+function direction(event) {
+    let key = event.keyCode;
+    if (key == 37 && state != "RIGHT") {
+        dir = "LEFT";
+    } else if (key == 38 && state != "DOWN") {
+        dir = "UP";
+    } else if (key == 39 && state != "LEFT") {
+        dir = "RIGHT";
+    } else if (key == 40 && state != "UP") {
+        dir = "DOWN";
+    }
+
+    sound.setSource(dir)
+    sound.play()
+}
+
+function setStateAndPlaySound(s) {
+    state = s;
+    sound.setSource(state)
+    sound.play()
 }
 
 function initGame() {
+    document.addEventListener("keydown", direction)
+
     ground.init()
     score.init()
     food.init()
     snake.init()
-    document.addEventListener("keydown", direction.set)
 }
 
-function startGame() {    
-    let game = setInterval(draw, 100)
+function collision(head, array) {
+    for (let i = 0; i < array.length; i++) {
+        if (head.x == array[i].x && head.y == array[i].y) {
+            return true
+        }
+    }
+    return false
+}
+
+function snakeMove() {
+    // reset state
+    state = ""
+
+    let headX = snake.pos[0].x;
+    let headY = snake.pos[0].y;
+    switch (dir) {
+        case "LEFT":
+            headX -= box;
+            break;
+        case "RIGHT":
+            headX += box;
+            break;
+        case "DOWN":
+            headY += box;
+            break;
+        case "UP":
+            headY -= box;
+            break;
+        default:
+            break;
+    }    
+
+    // check if snake eats food
+    if (headX == food.x && headY == food.y) {
+        score.value++;
+        setStateAndPlaySound("EAT")
+        food.setPosition()
+    } else {
+        snake.pos.pop()
+    }
+
+    // check if game over
+    if (headX < box || headY < 3 * box || headX > 17 * box || headY > 17 * box) {
+        gameOver()
+    }
+
+    let newHead = {
+        x: headX,
+        y: headY
+    }
+    if (collision(newHead, snake.pos)) {
+        gameOver()
+    }
+    
+    snake.pos.unshift(newHead)
+}
+
+function gameOver() {
+    setStateAndPlaySound("DEAD")
+    clearInterval(game)
+    document.removeEventListener("keydown", direction)
+}
+
+function gamePlay() {
+    ground.draw()
+    score.draw()
+    food.draw()
+    snake.draw()
+
+    snakeMove()
 }
 
 initGame()
-startGame()
+let game = setInterval(gamePlay, 200)
