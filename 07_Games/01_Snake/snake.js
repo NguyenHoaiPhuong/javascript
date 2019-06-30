@@ -80,6 +80,41 @@ const score = {
     }
 }
 
+const direction = {
+    d: "",
+    sound: new Audio(),
+
+    setSound: function() {
+        if (this.d == "LEFT") {
+            this.sound.src = "/audio/left.mp3"
+        } else if (this.d == "RIGHT") {
+            this.sound.src = "/audio/right.mp3"
+        } else if (this.d == "UP") {
+            this.sound.src = "/audio/up.mp3"
+        } else if (this.d == "DOWN") {
+            this.sound.src = "/audio/down.mp3"
+        }
+        this.sound.play()
+    },
+
+    set: function(event) {
+        let key = event.keyCode;
+        if (key == 37 && this.d != "RIGHT") {
+            this.d = "LEFT";
+            this.setSound();
+        } else if (key == 38 && this.d != "DOWN") {
+            this.d = "UP";
+            this.setSound();
+        } else if (key == 39 && this.d != "LEFT") {
+            this.d = "RIGHT";
+            this.setSound();
+        } else if (key == 40 && this.d != "UP") {
+            this.d = "DOWN";
+            this.setSound();
+        }
+    }
+}
+
 
 function draw() {
     ground.draw()
@@ -93,6 +128,7 @@ function initGame() {
     score.init()
     food.init()
     snake.init()
+    document.addEventListener("keydown", direction.set)
 }
 
 function startGame() {    
