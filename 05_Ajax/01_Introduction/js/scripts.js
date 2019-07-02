@@ -5,7 +5,7 @@ function loadDoc() {
             document.getElementById("demo").innerHTML = this.responseText;
         }
     }
-    xhttp.open("GET", "resources/ajax_intro.txt", true)
+    xhttp.open("GET", "resources/ajax_intro.html", true)
     // xhttp.open("GET", "js/scripts.js", true)
     xhttp.send()
 }
