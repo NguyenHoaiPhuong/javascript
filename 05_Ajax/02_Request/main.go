@@ -28,18 +28,32 @@ func HomePage(w http.ResponseWriter, r *http.Request) {
 
 // Login by username and password
 func Login(w http.ResponseWriter, r *http.Request) {
-	akagi := user{
-		Name:     "Nguyen Hoai Phuong",
-		Password: "1234",
+	if r.Method == "GET" {
+		akagi := user{
+			Name:     "Nguyen Hoai Phuong",
+			Password: "1234",
+		}
+
+		bs, err := json.Marshal(akagi)
+		if err != nil {
+			log.Fatalln("Encode user error:", err)
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(bs)
+	} else if r.Method == "POST" {
+		err := r.ParseForm()
+		if err != nil {
+			log.Fatalln(err)
+		}
+		user := r.FormValue("username")
+		pass := r.FormValue("password")
+		fmt.Println(user)
+		fmt.Println(pass)
+		http.Redirect(w, r, "/login", http.StatusOK)
+		fmt.Fprintf(w, "User name: %s\nPassword : %s\n", user, pass)
 	}
 
-	bs, err := json.Marshal(akagi)
-	if err != nil {
-		log.Fatalln("Encode user error:", err)
-	}
-
-	w.Header().Set("Content-Type", "application/json")
-	w.Write(bs)
 }
 
 type user struct {

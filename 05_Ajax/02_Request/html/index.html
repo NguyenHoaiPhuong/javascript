@@ -9,14 +9,16 @@
             Ajax Requests
         </h1>
         
-        Name:
-        <input type="text" id="1001" name="username">
-        <br><br>
-        Password:
-        <input type="password" id="1002" name="password">
-        <br><br>
+        <form id="1000" method="POST" action="/login" onsubmit="ajaxPost()">
+            Name:
+            <input type="text" id="1001" name="username">
+            <br><br>
+            Password:
+            <input type="password" id="1002" name="password">
+            <br><br>
 
-        <button id="1003" name="get" onclick="ajaxGet()">GET</button>
-        <button id="1004" name="post" onclick="ajaxPost()">POST</button>
+            <button id="1003" name="get" onclick="ajaxGet()">GET</button>
+            <input type="submit" id="1004" name="post" value="POST">
+        </form>        
     </body>
 </html>

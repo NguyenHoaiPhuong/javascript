@@ -10,3 +10,16 @@ function ajaxGet() {
     xhtml.open("GET", "/login")
     xhtml.send()
 }
+
+function ajaxPost() {
+    let xhtml = new XMLHttpRequest();
+    xhtml.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            let url = this.responseURL.toString();
+            let win = window.open(url, "_blank");
+            win.alert(this.responseText)
+        }
+    }
+    xhtml.open("POST", "/login");
+    xhtml.send(FormData);
+}
