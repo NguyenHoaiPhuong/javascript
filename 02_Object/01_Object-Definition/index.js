@@ -1,21 +1,33 @@
 const Login = () => {
     let doc = document.getElementById("root")
+    doc.innerHTML = ""
+
+    // Create an object with keyword new
+    let user = new Object()
+    user.name = "akagi"
+    user.password = "akagi@1234"
 
     let userLabel = document.createElement("LABEL")
+    userLabel.setAttribute("style", "display: inline-block; width: 100px")
     userLabel.innerHTML = "User:"
     doc.appendChild(userLabel)
 
     let userInput = document.createElement("INPUT")
+    userInput.setAttribute("type", "text")
+    userInput.setAttribute("placeholder", user.name)
     doc.appendChild(userInput)
 
     // New line
     doc.appendChild(document.createElement("BR"))
 
     let passLabel = document.createElement("LABEL")
+    passLabel.setAttribute("style", "display: inline-block; width: 100px")
     passLabel.innerHTML = "Password:"
     doc.appendChild(passLabel)
 
     let passInput = document.createElement("INPUT")
+    passInput.setAttribute("type", "password")
+    passInput.setAttribute("placeholder", user.password)
     doc.appendChild(passInput)
 
     // New line
@@ -31,7 +43,7 @@ const Contact = () => {
     let doc = document.getElementById("root");
     doc.innerHTML = ""
 
-    // Object admin
+    // Object admin created by using object literal
     let admin = {
         firstName: "Nguyen",
         lastName: "Hoai Phuong",
