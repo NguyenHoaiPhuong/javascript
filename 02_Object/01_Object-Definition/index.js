@@ -104,3 +104,39 @@ const Contact = () => {
     // New line
     doc.appendChild(document.createElement("BR"))
 }
+
+const About = () => {
+    let doc = document.getElementById("root")
+    doc.innerHTML = ""
+
+    let me = new Person("Nguyen", "Hoai Phuong", 34)
+
+    let nameLabel = document.createElement("label")
+    nameLabel.setAttribute("style", "display: inline-block; width: 100px")
+    nameLabel.innerHTML = "Name:"
+    doc.appendChild(nameLabel)    
+
+    let nameTxt = document.createElement("input")
+    nameTxt.setAttribute("type", "text")
+    nameTxt.setAttribute("value", me.firstName + " " + me.lastName)
+    doc.appendChild(nameTxt)
+
+    // New line
+    doc.appendChild(document.createElement("br"))
+
+    let ageLabel = document.createElement("label")
+    ageLabel.setAttribute("style", "display: inline-block; width: 100px")
+    ageLabel.innerHTML = "Age:"
+    doc.appendChild(ageLabel)    
+
+    let ageTxt = document.createElement("input")
+    ageTxt.setAttribute("type", "text")
+    ageTxt.setAttribute("value", me.age.toString())
+    doc.appendChild(ageTxt)
+}
+
+function Person(firstName, lastName, age) {
+    this.firstName = firstName
+    this.lastName = lastName
+    this.age = age
+}
