@@ -69,4 +69,3 @@ Please refer to below link for more details:
 
 - https://webpack.js.org/concepts/
 
-- https://github.com/ronami/minipack
