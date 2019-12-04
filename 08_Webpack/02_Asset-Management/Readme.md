@@ -15,6 +15,12 @@ npm install --save lodash
 npm install --save-dev style-loader css-loader
 ```
 
+### Loading Images
+
+```
+npm install --save-dev file-loader
+```
+
 ## How to build?
 
 Without config (default entry = ./src/index.js, default output = ./dist/main.js):
@@ -28,3 +34,7 @@ With config:
 ```
 npx webpack --config webpack.config.js
 ```
+
+## References
+
+- https://webpack.js.org/guides/asset-management/
